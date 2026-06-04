@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mô phỏng Khối cầu Bloch 3D</title>
+    <title>3D Bloch Sphere Simulation</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #0b0f19; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; display: flex; height: 100vh; }
@@ -27,27 +27,31 @@
 <body>
     <div id="canvas-container"></div>
     <div id="control-panel">
-        <h2>Khối Cầu Bloch</h2>
-        <p class="subtitle">Trực quan hóa trạng thái một Qubit</p>
+        <h2>Bloch Sphere</h2>
+        <p class="subtitle">Visualizing a Qubit State</p>
+        
         <div class="control-group">
-            <label for="theta">Góc Theta (θ) - Biên độ: <span id="theta-val">45°</span></label>
+            <label for="theta">Theta (θ) - Amplitude: <span id="theta-val">45°</span></label>
             <input type="range" id="theta" min="0" max="180" value="45">
         </div>
+        
         <div class="control-group">
-            <label for="phi">Góc Phi (ϕ) - Pha: <span id="phi-val">45°</span></label>
+            <label for="phi">Phi (ϕ) - Phase: <span id="phi-val">45°</span></label>
             <input type="range" id="phi" min="0" max="360" value="45">
         </div>
+        
         <div class="results-panel">
             <div class="result-row">
-                <span>Xác suất ra |0⟩:</span>
+                <span>Probability of |0⟩:</span>
                 <span id="prob0" class="prob-val">85.4%</span>
             </div>
             <div class="result-row">
-                <span>Xác suất ra |1⟩:</span>
+                <span>Probability of |1⟩:</span>
                 <span id="prob1" class="prob-val">14.6%</span>
             </div>
         </div>
-        <p class="instruction">Dùng chuột trái để xoay khối cầu.<br>Dùng chuột phải để di chuyển hoặc cuộn để phóng to/thu nhỏ.</p>
+        
+        <p class="instruction">Left-click and drag to rotate the sphere.<br>Right-click to pan, or scroll to zoom in/out.</p>
     </div>
 
     <script>
@@ -73,7 +77,7 @@
 
         const sphereGeo = new THREE.SphereGeometry(1, 32, 32);
         const sphereMat = new THREE.MeshPhongMaterial({
-            color: 0x1e293b, // <--- ĐÃ SỬA LỖI Ở ĐÂY
+            color: 0x1e293b,
             transparent: true,
             opacity: 0.15,
             wireframe: false,
@@ -141,28 +145,4 @@
             vectorGroup.rotation.y = phiRad;
 
             const p0 = Math.pow(Math.cos(thetaRad / 2), 2) * 100;
-            const p1 = Math.pow(Math.sin(thetaRad / 2), 2) * 100;
-
-            prob0Text.innerText = p0.toFixed(1) + "%";
-            prob1Text.innerText = p1.toFixed(1) + "%";
-        }
-
-        thetaSlider.addEventListener('input', updateQubitState);
-        phiSlider.addEventListener('input', updateQubitState);
-        updateQubitState();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
-        }
-        animate();
-    </script>
-</body>
-</html>
+            const p1 = Math.pow(Math.
