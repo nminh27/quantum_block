@@ -145,4 +145,28 @@
             vectorGroup.rotation.y = phiRad;
 
             const p0 = Math.pow(Math.cos(thetaRad / 2), 2) * 100;
-            const p1 = Math.pow(Math.
+            const p1 = Math.pow(Math.sin(thetaRad / 2), 2) * 100;
+
+            prob0Text.innerText = p0.toFixed(1) + "%";
+            prob1Text.innerText = p1.toFixed(1) + "%";
+        }
+
+        thetaSlider.addEventListener('input', updateQubitState);
+        phiSlider.addEventListener('input', updateQubitState);
+        updateQubitState();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
